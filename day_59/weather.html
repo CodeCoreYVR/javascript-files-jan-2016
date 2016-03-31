@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Weather Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        navigator.geolocation.getCurrentPosition(function(location) {
+          var latitude  = location.coords.latitude;
+          var longitude = location.coords.longitude;
+
+          $.ajax({
+            url: "http://api.openweathermap.org/data/2.5/weather?APPID=8453294db1ca526ff526923f91c1e1cb&lat=" + latitude + "&lon=" + longitude + "&units=metric",
+            method: "GET"
+          }).done(function(data){
+            var tempC = data.main.temp;
+            $("#temperature").html(tempC);
+            $("#city").html("Weather In " + data.name);
+          }).fail(function(err){
+            alert("please refresh page");
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1 id="city"></h1>
+    <p id="temperature"></p>
+  </body>
+</html>
